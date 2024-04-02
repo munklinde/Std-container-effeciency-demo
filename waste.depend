@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1712090047 source:/home/lars/projects/cpp/gitmemwaste/memwaste/memwaste/memwaste.cpp
+	<memory>
+	<cstring>
+	<iostream>
+	"memwaste.h"
+
+1712090047 /home/lars/projects/cpp/gitmemwaste/memwaste/memwaste/memwaste.h
+
+1712090047 source:/home/lars/projects/cpp/gitmemwaste/memwaste/test.cpp
+	<iostream>
+	<vector>
+	<memory>
+	"memwaste/memwaste.h"
+

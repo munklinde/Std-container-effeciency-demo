@@ -2,7 +2,7 @@
 #ifndef __MEMWASTE_H__
 #define __MEMWASTE_H__
 
-#define __CPP_20__ 
+//#define __CPP_20__
 
 class memwaste
 {

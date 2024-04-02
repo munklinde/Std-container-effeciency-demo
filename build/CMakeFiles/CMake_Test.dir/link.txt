@@ -1,1 +1,0 @@
-/bin/g++-10  -g   CMakeFiles/CMake_Test.dir/test.cpp.o  -o CMake_Test  memwaste/libMemWaste.a 

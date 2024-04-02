@@ -1,2 +1,0 @@
-/usr/bin/ar qc libMemWaste.a  CMakeFiles/MemWaste.dir/memwaste.cpp.o
-/usr/bin/ranlib libMemWaste.a

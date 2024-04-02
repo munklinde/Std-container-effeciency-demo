@@ -32,7 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="memwaste/memwaste.cpp" />
+		<Unit filename="memwaste/memwaste.h" />
+		<Unit filename="test.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

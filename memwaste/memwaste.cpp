@@ -1,66 +1,56 @@
 #include <memory>
-#include <cstring>
+#include <algorithm>
 #include <iostream>
 #include "memwaste.h"
 
 int memwaste::counter = 0;
 
 memwaste::memwaste()
-	: id(++counter)
-	, pwaste(new char[ss])
+    : id(++counter)
+    , pwaste(std::make_unique<char[]>(ss))
 {
-	std::cout << "Making waste id:" << id << std::endl;
+    std::cout << "Making waste id:" << id << std::endl;
 }
 
 memwaste::memwaste(const memwaste& other)
-	: id(++counter)
-	, pwaste(new char[ss])
+    : id(++counter)
+    , pwaste(std::make_unique<char[]>(ss))
 {
-	memcpy(pwaste, other.pwaste, ss);
-	std::cout << "Making waste id:" << id << " by copy constructing from id:"<< other.id << std::endl;
+    std::copy_n(other.pwaste.get(), ss, pwaste.get());
+    std::cout << "Making waste id:" << id << " by copy constructing from id:" << other.id << std::endl;
 }
 
 memwaste& memwaste::operator=(const memwaste& other)
 {
-	std::cout << "Changing waste id:" << id << " by asignment from id:"<< other.id << std::endl;
-	if (this == &other) return *this;
-	if(pwaste!=0) delete[] pwaste;
-	pwaste = new char[ss];
-	memcpy(pwaste, other.pwaste, ss);
-	id = other.id;
-	return *this;
+    std::cout << "Changing waste id:" << id << " by assignment from id:" << other.id << std::endl;
+    if (this == &other) return *this;
+    pwaste = std::make_unique<char[]>(ss);
+    std::copy_n(other.pwaste.get(), ss, pwaste.get());
+    id = other.id;
+    return *this;
 }
 
 memwaste::~memwaste()
 {
-	std::cout << "Destroying waste id:" << id << std::endl;
-	if (pwaste!=0) delete[] pwaste;
+    std::cout << "Destroying waste id:" << id << std::endl;
 }
-
 
 #ifdef __CPP_20__
 
-memwaste& memwaste::operator=(memwaste&& other)
+memwaste& memwaste::operator=(memwaste&& other) noexcept
 {
-	std::cout << "Making waste id:" << id << " by move asignment from id:"<< other.id << std::endl;
-	if (this == &other) return *this;
-	if(pwaste!=0) delete[] pwaste;
-
-	pwaste = other.pwaste;
-	id = other.id;
-
-	other.pwaste = nullptr;
-	other.id = 0;
-
-	return *this;
+    std::cout << "Making waste id:" << id << " by move assignment from id:" << other.id << std::endl;
+    if (this == &other) return *this;
+    pwaste = std::move(other.pwaste);
+    id = other.id;
+    other.id = 0;
+    return *this;
 }
 
-memwaste::memwaste(memwaste&& other) noexcept 
-	: id(std::move(other.id))
-	, pwaste(std::move(other.pwaste))
+memwaste::memwaste(memwaste&& other) noexcept
+    : id(std::exchange(other.id, 0))
+    , pwaste(std::move(other.pwaste))
 {
-	std::cout << "Making waste id:" << id << " by move constructing from id:"<< other.id << std::endl;
-	other.id=0;
-	other.pwaste=0;
+    std::cout << "Making waste id:" << id << " by move constructing from id:" << other.id << std::endl;
 }
 #endif

@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+echo "Checking for C++ compiler..."
+if ! command -v g++ &> /dev/null
+then
+    echo "g++ could not be found. Please install g++ or update this script for your compiler."
+    exit 1
+fi
+
+echo "C++ compiler found: $(g++ --version | head -n 1)"
+
+if [ ! -f Makefile ]; then
+    echo "No Makefile found. Creating a simple Makefile..."
+    cat <<EOL > Makefile
+CXX = g++
+CXXFLAGS = -O2 -std=c++17
+
+SRCS = \$(wildcard *.cpp)
+OBJS = \$(SRCS:.cpp=.o)
+TARGET = main
+
+all: \$(TARGET)
+
+\$(TARGET): \$(OBJS)
+	\$(CXX) \$(CXXFLAGS) -o \$@ \$^
+
+clean:
+	rm -f \$(TARGET) \$(OBJS)
+
+.PHONY: all clean
+EOL
+    echo "Makefile created."
+else
+    echo "Makefile already exists."
+fi
+
+echo "Configuration complete."

@@ -1,4 +1,4 @@
-# Demo
+# move semantics demo
 
 Purpose is to observe how containers from std library behaves when adding objects.
 Type being allocated is instrumentd to output on creation, copying, destruction etc.
